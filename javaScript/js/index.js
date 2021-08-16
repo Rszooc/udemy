@@ -376,7 +376,10 @@ console.log(empleado1.nombre);
 // Llamando al método de la case padre 
 console.log(empleado1.nombreCompleto());
 
-// Sobre escritura 
+
+
+
+// Sobre escritura en JavaScript
 class Persona {
     constructor(nombre, apellido) {
         this.Nombre = nombre;
@@ -410,5 +413,145 @@ class Empleado extends Persona {
     set departamento(departamento) {
         this.Departamento = departamento;
     }
+    // Sobreescritura
+    nombreCompleto() {
+        // return `${this.nombre} ${this.apellido} ${this.departamento}`
+        // Optimizando
+        return `${super.nombreCompleto()} ${this.Departamento}`;
+    }
 }
+// Creando al nuevo empleado
+let empleado1 = new Empleado('Valeria', 'Ramirez', 'Sistemas');
+
+console.log(empleado1.nombreCompleto());
+
+
+// Manejo de objetos para manejo de métodos 
+class Persona {
+    constructor(nombre, apellido) {
+        this.Nombre = nombre;
+        this.Apellido = apellido;
+    }
+    get nombre() {
+        return this.Nombre;
+    }
+    get apellido() {
+        return this.Apellido;
+    }
+    set nombre(nombre) {
+        this.Nombre = nombre;
+    }
+    set apellido(apellido) {
+        this.Apellido = apellido;
+    }
+    nombreCompleto(){
+        return `${this.Nombre} ${this.Apellido}`;
+    }
+        // Sobreescribiendo métodos 
+    toString(){
+        // Utilización de polimorfismo (multiples formas en tiempo de ejecución)
+        // El método se aplica si es el padre o el hijo
+        return this.nombreCompleto();
+    }
+}
+// Clase hija 
+class Empleado extends Persona {
+    constructor(nombre, apellido, departamento) {
+        super(nombre, apellido);
+        this.Departamento = departamento;
+    }
+    get departamento() {
+        return this.Departamento;
+    }
+    set departamento(departamento) {
+        this.Departamento = departamento;
+    }
+    nombreCompleto() {
+        return `${super.nombreCompleto()} ${this.Departamento}`;
+    }
+}
+let empleado1 = new Empleado('Valeria', 'Ramirez', 'Sistemas');
+console.log(empleado1.nombreCompleto());
+// Polimorfismo se llama la segunda función definida en el hijo
+console.log(empleado1.toString());
+
+let uriel = new Persona('Uriel', 'Sanjuan');
+console.log(uriel.toString());
+
+// Métodos estaticos 
+// -------------------------------------------------------------------
+
+class Persona {
+    constructor(nombre, apellido) {
+        this.Nombre = nombre;
+        this.Apellido = apellido;
+    }
+    get nombre() { return this.Nombre; }
+    get apellido() { return this.Apellido; }
+    set nombre(nombre) { this.Nombre = nombre; }
+    set apellido(apellido) { this.Apellido = apellido; }
+    nombreCompleto(){ return `${this.Nombre} ${this.Apellido}`; }
+    toString(){ return this.nombreCompleto(); }
+    // Método estático static
+    // El método estático solo se puede llamar desde la clase no desde un objeto
+    static saludar(){ console.log('Hola soy estático');}
+    // Pero si se puede usar objetos
+    static saludar2(persona) { console.log(persona.nombre);}
+}
+// Clase hija 
+class Empleado extends Persona {
+    constructor(nombre, apellido, departamento) {
+        super(nombre, apellido);
+        this.Departamento = departamento;
+    }
+    get departamento() { return this.Departamento; }
+    set departamento(departamento) { this.Departamento = departamento; }
+    nombreCompleto() { return `${super.nombreCompleto()} ${this.Departamento}`; }
+}
+let empleado1 = new Empleado('Valeria', 'Ramirez', 'Sistemas');
+let uriel = new Persona('Uriel', 'Sanjuan');
+
+// uriel.saludar(); //-> error porque es una clase
+// Solo se llama desde la clase
+Persona.saludar();
+// Un método estatico si puede recibir objetos
+Persona.saludar2(uriel);
+// los métodos estáticos se heredan a los nuevas clases hijas
+Empleado.saludar();
+Empleado.saludar2(empleado1);
+
+// Valores estáticos 
+
+class Persona {
+    // Valor estático, solo lo podrá usar las clases
+    static contarObjetosPersona = 0;
+    constructor(nombre, apellido) {
+        this.Nombre = nombre;
+        this.Apellido = apellido;
+    }
+    get nombre() { return this.Nombre; }
+    get apellido() { return this.Apellido; }
+    set nombre(nombre) { this.Nombre = nombre; }
+    set apellido(apellido) { this.Apellido = apellido; }
+    nombreCompleto(){ return `${this.Nombre} ${this.Apellido}`; }
+    toString(){ return this.nombreCompleto(); }
+    static saludar(){ console.log('Hola soy estático');}
+    static saludar2(persona) { console.log(persona.nombre);}
+}
+// Clase hija 
+class Empleado extends Persona {
+    constructor(nombre, apellido, departamento) {
+        super(nombre, apellido);
+        this.Departamento = departamento;
+    }
+    get departamento() { return this.Departamento; }
+    set departamento(departamento) { this.Departamento = departamento; }
+    nombreCompleto() { return `${super.nombreCompleto()} ${this.Departamento}`; }
+}
+let empleado1 = new Empleado('Valeria', 'Ramirez', 'Sistemas');
+let uriel = new Persona('Uriel', 'Sanjuan');
+
+
+
+
 
